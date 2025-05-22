@@ -1,83 +1,68 @@
-/* ======= 전체 색상 기준 ======= */
-:root {
-  --primary-orange: #E9952E;
-  --primary-olive: #8A9E5E;
-  --primary-bluegray: #4F7D93;
-  --background-cream: #F8E2B0;
-  --line-dark: #3A2B1E;
-}
+@import '/fonts/SUIT.css';
 
-/* ======= 기본 설정 ======= */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+:root {
+  --main-color: #F4A32D;
+  --accent-color: #A0A962;
+  --bot-color: #4A7C94;
+  --bg-color: #FCE3A3;
+  --text-color: #333333;
 }
 
 body {
-  background-color: var(--background-cream);
-  font-family: 'Segoe UI', sans-serif;
-  color: var(--line-dark);
-  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  font-family: 'SUIT', 'Noto Sans KR', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
-/* ======= 기본 링크 ======= */
-a {
-  color: var(--primary-bluegray);
-  text-decoration: none;
+h1, h2 {
+  color: var(--text-color);
+  text-align: center;
 }
 
-a:hover {
-  text-decoration: underline;
-}
-
-/* ======= 버튼 공통 스타일 ======= */
-button {
-  background-color: var(--primary-orange);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 0.6rem 1.2rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #cc7d1f;
-}
-
-/* ======= 입력창 ======= */
-input, textarea {
-  border: 2px solid var(--primary-olive);
-  border-radius: 8px;
-  padding: 0.6rem;
-  font-size: 1rem;
-  width: 100%;
-  outline: none;
-}
-
-input:focus, textarea:focus {
-  border-color: var(--primary-bluegray);
-  background-color: #fffef9;
-}
-
-/* ======= 챗박스 스타일 기본 예시 ======= */
 .chat-box {
-  background-color: #ffffff;
-  border: 2px solid var(--primary-olive);
-  border-radius: 12px;
-  padding: 1rem;
-  height: 70vh;
+  height: 400px;
   overflow-y: auto;
+  background-color: #fff;
+  padding: 1rem;
+  border: 2px solid var(--accent-color);
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.msg {
+  margin: 0.5rem 0;
 }
 
 .msg.user {
   text-align: right;
-  color: var(--primary-orange);
+  color: var(--main-color);
+  font-weight: bold;
 }
 
 .msg.bot {
   text-align: left;
-  color: var(--primary-bluegray);
+  color: var(--bot-color);
+  font-weight: bold;
+}
+
+.message-input {
+  display: flex;
+}
+
+.message-input input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 2px solid var(--accent-color);
+  border-radius: 6px 0 0 6px;
+}
+
+.message-input button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: var(--main-color);
+  color: white;
+  border-radius: 0 6px 6px 0;
+  cursor: pointer;
 }

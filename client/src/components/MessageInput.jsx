@@ -1,25 +1,45 @@
-import { useState } from 'react';
+//사용자 입력창 + 전송 버튼
+import React, { useState } from 'react';
 
 export default function MessageInput({ onSend }) {
-  const [input, setInput] = useState('');
+  const [text, setText] = useState('');
 
-  const handleSend = () => {
-    if (input.trim()) {
-      onSend(input.trim());
-      setInput('');
-    }
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    if (text.trim() === '') return; //앞뒤 공백 제거 & 입력값 없을때 그냥 종료료
+
+    onSend(text);         // 부모(ChatPage)로 메시지 전달
+    setText('');          // 입력창 초기화
   };
 
   return (
-    <div className="message-input">
+    <form onSubmit={handleSubmit} style={{ display: 'flex' }}>
       <input
         type="text"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder="궁금한 학칙이나 상황을 입력하세요..."
-        onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="write a message..."
+        style={{
+          flex: 1,
+          padding: '0.5rem',
+          borderRadius: '4px 0 0 4px',
+          border: '1px solid #ccc'
+        }}
       />
-      <button onClick={handleSend}>Send</button>
-    </div>
+
+      <button
+        type="submit"
+        style={{
+          padding: '0.5rem 1rem',
+          border: 'none',
+          backgroundColor: '#ffa500',
+          color: 'white',
+          borderRadius: '0 4px 4px 0'
+        }}
+      >
+        ⬇️
+      </button>
+    </form>
   );
 }

@@ -1,41 +1,52 @@
-import { useState } from 'react';
-import './LoginPage.css'; // 👉 스타일 분리 (아래 따로 제공)
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
+  const [student, setID] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // 👉 추후 백엔드 연동할 부분
-    console.log('로그인 시도:', { email, password });
+  const navigate = useNavigate(); 
+
+  const handleLogin = (event) => {
+    event.preventDefault(); // 새로고침 방지
+    console.log('로그인 시도:', student, password);
+    // 나중에 여기서 서버와 통신하면 됨
+
+    // ✅ 로그인 성공했다고 가정하고 /chat 페이지로 이동
+    navigate('/chat');
   };
 
   return (
-    <div className="login-container">
-      <h2>로그인</h2>
-      <form onSubmit={handleSubmit} className="login-form">
-        <label>
-          이메일
+    <div style={{ padding: '2rem' }}>
+      <h1>Login page</h1>
+      <form onSubmit={handleLogin}>
+        <div style={{ marginBottom: '1rem' }}>
+          <label>student number</label><br />
           <input
-            type="email"
-            placeholder="your@email.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="student"
+            value={student}
+            onChange={(e) => setID(e.target.value)}
+            placeholder="your student number"
+            style={{ width: '100%', padding: '0.5rem' }}
             required
           />
-        </label>
-        <label>
-          비밀번호
+        </div>
+
+        <div style={{ marginBottom: '1rem' }}>
+          <label>password</label><br />
           <input
             type="password"
-            placeholder="••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder="enter your password"
+            style={{ width: '100%', padding: '0.5rem' }}
             required
           />
-        </label>
-        <button type="submit">로그인</button>
+        </div>
+
+        <button type="submit" style={{ padding: '0.5rem 1rem' }}>
+          Login
+        </button>
       </form>
     </div>
   );
