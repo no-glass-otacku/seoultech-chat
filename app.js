@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
-const mysql = require('mysql2/promise');
+const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 require('dotenv').config();
 
@@ -13,15 +13,13 @@ app.use(express.json());
 // 정적 파일 제공 (HTML, CSS, JS 파일들)
 app.use(express.static(path.join(__dirname, 'public')));
 
-// DB 연결 풀 생성
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
+// SQLite DB 연결 (파일은 프로젝트 루트에 있는 api_test.db)
+const db = new sqlite3.Database('./api_test.db', (err) => {
+  if (err) {
+    console.error('❌ Failed to connect to SQLite DB:', err.message);
+  } else {
+    console.log('✅ Connected to SQLite database (api_test.db)');
+  }
 });
 
 // Swagger 설정
@@ -31,11 +29,11 @@ const swaggerOptions = {
     info: {
       title: 'Users API',
       version: '1.0.0',
-      description: 'API for users table in api_test database',
+      description: 'API for users table in SQLite database',
     },
     servers: [
       {
-        url: `http://localhost:${process.env.PORT}`,
+        url: `http://localhost:${process.env.PORT || 3000}`,
         description: 'Development server',
       },
     ],
@@ -74,14 +72,14 @@ app.get('/', (req, res) => {
  *                   email:
  *                     type: string
  */
-app.get('/api/users', async (req, res) => {
-  try {
-    const [rows] = await pool.query('SELECT * FROM users');
+app.get('/api/users', (req, res) => {
+  db.all('SELECT * FROM users', [], (err, rows) => {
+    if (err) {
+      console.error('Error fetching users:', err.message);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
     res.json(rows);
-  } catch (error) {
-    console.error('Error fetching users:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
+  });
 });
 
 /**
@@ -103,25 +101,25 @@ app.get('/api/users', async (req, res) => {
  *       404:
  *         description: 사용자를 찾을 수 없음
  */
-app.get('/api/users/:id', async (req, res) => {
-  try {
-    const [rows] = await pool.query('SELECT * FROM users WHERE id = ?', [req.params.id]);
-    
-    if (rows.length === 0) {
+app.get('/api/users/:id', (req, res) => {
+  db.get('SELECT * FROM users WHERE id = ?', [req.params.id], (err, row) => {
+    if (err) {
+      console.error('Error fetching user:', err.message);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+
+    if (!row) {
       return res.status(404).json({ error: 'User not found' });
     }
-    
-    res.json(rows[0]);
-  } catch (error) {
-    console.error('Error fetching user:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
+
+    res.json(row);
+  });
 });
 
 // 서버 시작
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`Swagger UI available at http://localhost:${PORT}/api-docs`);
-  console.log(`Frontend available at http://localhost:${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`📘 Swagger UI: http://localhost:${PORT}/api-docs`);
+  console.log(`🌐 Frontend:   http://localhost:${PORT}`);
 });
