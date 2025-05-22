@@ -1,0 +1,83 @@
+/* ======= 전체 색상 기준 ======= */
+:root {
+  --primary-orange: #E9952E;
+  --primary-olive: #8A9E5E;
+  --primary-bluegray: #4F7D93;
+  --background-cream: #F8E2B0;
+  --line-dark: #3A2B1E;
+}
+
+/* ======= 기본 설정 ======= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--background-cream);
+  font-family: 'Segoe UI', sans-serif;
+  color: var(--line-dark);
+  line-height: 1.6;
+}
+
+/* ======= 기본 링크 ======= */
+a {
+  color: var(--primary-bluegray);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ======= 버튼 공통 스타일 ======= */
+button {
+  background-color: var(--primary-orange);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #cc7d1f;
+}
+
+/* ======= 입력창 ======= */
+input, textarea {
+  border: 2px solid var(--primary-olive);
+  border-radius: 8px;
+  padding: 0.6rem;
+  font-size: 1rem;
+  width: 100%;
+  outline: none;
+}
+
+input:focus, textarea:focus {
+  border-color: var(--primary-bluegray);
+  background-color: #fffef9;
+}
+
+/* ======= 챗박스 스타일 기본 예시 ======= */
+.chat-box {
+  background-color: #ffffff;
+  border: 2px solid var(--primary-olive);
+  border-radius: 12px;
+  padding: 1rem;
+  height: 70vh;
+  overflow-y: auto;
+}
+
+.msg.user {
+  text-align: right;
+  color: var(--primary-orange);
+}
+
+.msg.bot {
+  text-align: left;
+  color: var(--primary-bluegray);
+}
