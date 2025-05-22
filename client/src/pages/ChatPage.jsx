@@ -5,7 +5,7 @@ import MessageInput from '../components/MessageInput';
 export default function ChatPage() {
   const [messages, setMessages] = useState([]);
 
-    //[성현]MessageInput 컴포넌트에서 받은 유저의 입력을 컨트롤하는 부분이므로 AI 구현할 때 이부분을 수정하면 됩니다!
+  //[성현]MessageInput 컴포넌트에서 받은 유저의 입력을 컨트롤하는 부분이므로 AI 구현할 때 이부분을 수정하면 됩니다!
   const handleSendMessage = (text) => {
     //사용자 메시지 추가
     const userMessage = { role: 'user', text };
@@ -18,7 +18,9 @@ export default function ChatPage() {
 
     // 유저와 봇 메시지 추가
     setMessages((prevMessages) => [...prevMessages, userMessage, botReply]);
-  };
+    
+    
+  }; //[성현] 여기까지
 
   return (
     <div style={{ padding: '2rem', maxWidth: '600px', margin: '0 auto' }}>
