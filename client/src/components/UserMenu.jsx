@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/usermenu.css';
 import SettingsModal from './SettingsModal';
 
 export default function UserMenu() {
   const [open, setOpen] = useState(false);
-  const [ShowSettings, setShowSettings] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const menuRef = useRef();
   const navigate = useNavigate();
 
@@ -42,7 +43,7 @@ export default function UserMenu() {
 
         </div>
       )}
-      
+
       {showSettings && (
         <SettingsModal onClose={() => setShowSettings(false)} />
       )}

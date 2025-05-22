@@ -1,0 +1,71 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  width: 350px;
+  max-width: 90%;
+}
+
+input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.dropdown {
+  list-style: none;
+  background: #f8f8f8;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  max-height: 100px;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+}
+
+.dropdown li {
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+}
+
+.dropdown li:hover {
+  background: #eee;
+}
+
+.selected-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.course-chip {
+  background: #f4a32d;
+  color: white;
+  border-radius: 16px;
+  padding: 0.4rem 0.75rem;
+  display: flex;
+  align-items: center;
+}
+
+.course-chip button {
+  background: none;
+  border: none;
+  color: white;
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
