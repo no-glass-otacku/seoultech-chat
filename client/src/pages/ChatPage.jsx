@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import UserMenu from '../components/UserMenu';
+
 import ChatBox from '../components/ChatBox';
 import MessageInput from '../components/MessageInput';
 
@@ -23,7 +25,8 @@ export default function ChatPage() {
   }; //[성현] 여기까지
 
   return (
-    <div style={{ padding: '2rem', maxWidth: '600px', margin: '0 auto' }}>
+    <div className="chat-page" style={{ padding: '2rem', maxWidth: '600px', margin: '0 auto' }}>
+      <UserMenu />  {/* 오른쪽 상단 메뉴 */}
       <h2>🐤 Chatbot Page</h2>
       <ChatBox messages={messages} />
       <MessageInput onSend={handleSendMessage} />
