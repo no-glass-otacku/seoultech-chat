@@ -5,22 +5,28 @@ import MessageInput from '../components/MessageInput';
 export default function ChatPage() {
   const [messages, setMessages] = useState([]);
 
-  //[성현]MessageInput 컴포넌트에서 받은 유저의 입력을 컨트롤하는 부분이므로 AI 구현할 때 이부분을 수정하면 됩니다!
-  const handleSendMessage = (text) => {
-    //사용자 메시지 추가
+  // ✅ Only one clean definition
+  const handleSendMessage = async (text) => {
     const userMessage = { role: 'user', text };
+    setMessages((prev) => [...prev, userMessage]);
 
-    // 백엔드 챗봇 응답 API와 연결하면 됨
-    const botReply = {
-      role: 'bot',
-      text: `이건 AI가 대답해야 할 내용이에요: "${text}"`
-    };
+    try {
+      const res = await fetch("http://localhost:3001/chat/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question: text })
+      });
 
-    // 유저와 봇 메시지 추가
-    setMessages((prevMessages) => [...prevMessages, userMessage, botReply]);
-    
-    
-  }; //[성현] 여기까지
+      const botReply = await res.json();  // { role: 'bot', text: '...' }
+      setMessages((prev) => [...prev, botReply]);
+    } catch (err) {
+      console.error(err);
+      setMessages((prev) => [
+        ...prev,
+        { role: 'bot', text: '⚠️ GPT 응답 실패' }
+      ]);
+    }
+  };
 
   return (
     <div style={{ padding: '2rem', maxWidth: '600px', margin: '0 auto' }}>
