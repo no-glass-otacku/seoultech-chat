@@ -256,5 +256,39 @@ router.put('/:id', chatController.updateChatRoomTitle);
  *         description: 서버 내부 오류
  */
 router.delete('/:id', chatController.deleteChatRoom);
+/**
+ * @swagger
+ * /api/chat-rooms/ask:
+ *   post:
+ *     summary: GPT 기반 AI 응답 요청
+ *     description: 사용자의 질문에 대해 ChatGPT를 통해 AI 응답을 생성합니다.
+ *     tags: [Chat Rooms]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               message:
+ *                 type: string
+ *                 example: "서울과학기술대학교는 어디에 있나요?"
+ *     responses:
+ *       200:
+ *         description: GPT 응답 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 reply:
+ *                   type: string
+ *                   example: "서울과학기술대학교는 서울 노원구에 위치한 국립대학교입니다."
+ *       400:
+ *         description: 잘못된 요청 (입력 누락 등)
+ *       500:
+ *         description: GPT 응답 실패
+ */
+router.post('/ask', chatController.askGPT);
 
 module.exports = router;
